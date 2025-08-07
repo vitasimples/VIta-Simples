@@ -1,0 +1,1 @@
+Conteúdo simulado de supabase_config.txt para a pasta database/

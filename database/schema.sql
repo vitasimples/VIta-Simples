@@ -1,0 +1,1 @@
+Conteúdo simulado de schema.sql para a pasta database/

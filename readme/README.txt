@@ -1,0 +1,1 @@
+Conteúdo simulado de README.txt para a pasta readme/

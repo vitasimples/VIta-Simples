@@ -1,0 +1,12 @@
+# variáveis de ambiente
+*.env
+
+# node_modules
+**/node_modules/
+
+# builds
+frontend/dev-dist/
+novo-frontend/dev-dist/
+
+# logs
+**/*.log
