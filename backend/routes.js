@@ -1,1 +1,0 @@
-Conteúdo simulado de routes.js para a pasta backend/

@@ -10,3 +10,6 @@ novo-frontend/dev-dist/
 
 # logs
 **/*.log
+
+# pasta do backend antigo
+/backend/
