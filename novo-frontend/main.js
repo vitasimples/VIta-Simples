@@ -13,22 +13,33 @@ root.innerHTML = `
 
 const btn = document.getElementById('send');
 const out = document.getElementById('response');
+
 btn.addEventListener('click', () => {
   const question = document.getElementById('question').value.trim();
+
   if (!question) {
     out.textContent = 'Por favor, digite uma pergunta.';
     return;
   }
+
   out.textContent = 'Enviando pergunta…';
 
   fetch('/api/ask', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question, userId: 1 })
+    body: JSON.stringify({ question }) // <- aqui removemos o userId
   })
     .then(res => res.json())
     .then(data => {
-      out.textContent = `Resposta: ${data.answer}`;
+      if (data.answer) {
+        out.textContent = `Resposta: ${data.answer}`;
+      } else if (data.error) {
+        out.textContent = `Erro: ${data.error}`;
+        console.error(data.detalhes || data);
+      } else {
+        out.textContent = 'Erro inesperado.';
+        console.error(data);
+      }
     })
     .catch(err => {
       console.error(err);
