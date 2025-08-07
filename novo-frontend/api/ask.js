@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Tenta usar a OpenAI primeiro
+    // Tenta usar OpenAI primeiro
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
@@ -28,10 +28,10 @@ export default async function handler(req, res) {
   } catch (openaiError) {
     console.warn("Erro com OpenAI:", openaiError.message);
 
-    // Tenta a Gemini como fallback
+    // Se falhar, tenta Gemini com v1beta2 e estrutura correta
     try {
       const geminiResponse = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/chat-bison-001:generateMessage?key=${process.env.GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta2/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
         {
           contents: [
             {
