@@ -1,15 +1,23 @@
 # variáveis de ambiente
-*.env
+.env
+.env.local
+.env.*.local
+.env.*
 
 # node_modules
 **/node_modules/
 
 # builds
+dist/
 frontend/dev-dist/
 novo-frontend/dev-dist/
 
 # logs
 **/*.log
+
+# arquivos de sistema
+.DS_Store
+Thumbs.db
 
 # pasta do backend antigo
 /backend/

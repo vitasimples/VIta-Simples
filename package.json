@@ -2,7 +2,7 @@
   "name": "vita-simples",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vercel dev",     // ou: "node novo-frontend/api/index.js"
+    "dev": "vercel dev",
     "start": "node novo-frontend/api/index.js"
   },
   "dependencies": {

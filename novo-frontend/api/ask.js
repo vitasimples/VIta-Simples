@@ -13,7 +13,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 1. Tenta usar OpenAI primeiro
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
@@ -25,13 +24,12 @@ export default async function handler(req, res) {
     const resposta = completion.choices[0]?.message?.content || "Sem resposta.";
     return res.status(200).json({ resposta });
 
-  } catch (errorOpenAI) {
-    console.warn("Erro na OpenAI:", errorOpenAI?.response?.data || errorOpenAI.message);
+  } catch (openaiError) {
+    console.warn("Erro com OpenAI:", openaiError.message);
 
-    // 2. Se OpenAI falhar, tenta a Gemini
     try {
       const geminiResponse = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/chat-bison-001:generateMessage?key=${process.env.GOOGLE_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/chat-bison-001:generateMessage?key=${process.env.GEMINI_API_KEY}`,
         {
           contents: [
             {
@@ -47,12 +45,19 @@ export default async function handler(req, res) {
         }
       );
 
-      const respostaGemini = geminiResponse.data.candidates?.[0]?.content?.parts?.[0]?.text || "Sem resposta.";
+      const respostaGemini =
+        geminiResponse.data.candidates?.[0]?.content?.parts?.[0]?.text || "Sem resposta da Gemini.";
       return res.status(200).json({ resposta: respostaGemini });
 
-    } catch (errorGemini) {
-      console.error("Erro na Gemini:", errorGemini?.response?.data || errorGemini.message);
-      return res.status(500).json({ error: "Erro ao obter resposta de ambas as IA." });
+    } catch (geminiError) {
+      console.error("Erro com Gemini:", geminiError.message);
+      return res.status(500).json({
+        error: "Erro com ambas as APIs (OpenAI e Gemini).",
+        detalhes: {
+          openai: openaiError.message,
+          gemini: geminiError.message
+        }
+      });
     }
   }
 }
