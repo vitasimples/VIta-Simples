@@ -1,5 +1,4 @@
 // novo-frontend/api/ask.js
-import "dotenv/config";
 import { Configuration, OpenAIApi } from "openai";
 import axios from "axios";
 
