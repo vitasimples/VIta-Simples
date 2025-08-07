@@ -1,23 +1,23 @@
-# variáveis de ambiente
+# Arquivos de ambiente
 .env
 .env.local
 .env.*.local
 .env.*
 
-# node_modules
+# Dependências
 **/node_modules/
 
-# builds
+# Build
 dist/
 frontend/dev-dist/
 novo-frontend/dev-dist/
 
-# logs
+# Logs
 **/*.log
 
-# arquivos de sistema
+# Arquivos do sistema
 .DS_Store
 Thumbs.db
 
-# pasta do backend antigo
+# Antigo backend
 /backend/
