@@ -1,0 +1,13 @@
+{
+  "name": "vita-simples",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node api/ask.js"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "openai": "^4.0.0"
+  }
+}
