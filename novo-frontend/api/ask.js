@@ -1,52 +1,58 @@
-// novo-frontend/api/ask.js
-import OpenAI from "openai";
+import { OpenAI } from "openai";
 import axios from "axios";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+  const { prompt } = req.body;
+
+  if (!prompt) {
+    return res.status(400).json({ error: "Prompt não fornecido." });
   }
 
-  const { question } = req.body;
-
   try {
-    // 1) Chama OpenAI
-    const resp = await openai.chat.completions.create({
+    // 1. Tenta usar OpenAI primeiro
+    const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: question }],
-      temperature: 0.7,
+      messages: [
+        { role: "system", content: "Você é um assistente útil e objetivo." },
+        { role: "user", content: prompt }
+      ]
     });
-    const answer = resp.choices?.[0]?.message?.content?.trim() || "";
-    return res.status(200).json({ answer });
-  } catch (err) {
-    console.error("OpenAI erro:", err);
 
-    // 2) Fallback para Gemini (se você tiver GEMINI_API_KEY)
-    if (!process.env.GEMINI_API_KEY) {
-      return res
-        .status(500)
-        .json({ answer: "Desculpe, não consegui responder agora." });
-    }
+    const resposta = completion.choices[0]?.message?.content || "Sem resposta.";
+    return res.status(200).json({ resposta });
 
+  } catch (errorOpenAI) {
+    console.warn("Erro na OpenAI:", errorOpenAI?.response?.data || errorOpenAI.message);
+
+    // 2. Se OpenAI falhar, tenta a Gemini
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=${process.env.GEMINI_API_KEY}`;
-      const body = {
-        prompt: { text: question },
-        temperature: 0.7,
-        candidateCount: 1,
-      };
-      const gem = await axios.post(url, body);
-      const gemAnswer = gem.data.candidates?.[0]?.content?.trim() || "";
-      return res.status(200).json({ answer: gemAnswer });
-    } catch (e) {
-      console.error("Gemini erro:", e);
-      return res
-        .status(500)
-        .json({ answer: "Desculpe, não consegui responder agora." });
+      const geminiResponse = await axios.post(
+        `https://generativelanguage.googleapis.com/v1beta/models/chat-bison-001:generateMessage?key=${process.env.GOOGLE_API_KEY}`,
+        {
+          contents: [
+            {
+              parts: [{ text: prompt }],
+              role: "user"
+            }
+          ]
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      const respostaGemini = geminiResponse.data.candidates?.[0]?.content?.parts?.[0]?.text || "Sem resposta.";
+      return res.status(200).json({ resposta: respostaGemini });
+
+    } catch (errorGemini) {
+      console.error("Erro na Gemini:", errorGemini?.response?.data || errorGemini.message);
+      return res.status(500).json({ error: "Erro ao obter resposta de ambas as IA." });
     }
   }
 }
