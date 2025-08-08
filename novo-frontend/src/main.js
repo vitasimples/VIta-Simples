@@ -18,7 +18,6 @@ root.innerHTML = `
 `;
 
 const btn = document.getElementById('send');
-const out = document.getElementById('response');
 const historyList = document.getElementById('history');
 const clearBtn = document.getElementById('clear-history');
 const downloadBtn = document.getElementById('download-history');
@@ -28,7 +27,7 @@ const STORAGE_KEY = 'vita_user_history_1';
 
 function saveToHistory(question, answer) {
   const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  history.unshift({ question, answer, timestamp: new Date().toISOString() });
+  history.push({ question, answer, timestamp: new Date().toISOString() });
   localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
   renderHistory();
 }
@@ -44,6 +43,7 @@ function renderHistory() {
     `;
     historyList.appendChild(li);
   }
+  historyList.scrollTop = historyList.scrollHeight;
 }
 
 function formatAnswer(answer) {
