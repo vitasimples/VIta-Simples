@@ -1,21 +1,17 @@
-// main.js
 import './style.css';
 
 const root = document.querySelector('#app');
 root.innerHTML = `
-  <div class="header">
-    <img src="/assets/header-vita.png" alt="Header Vita" />
-  </div>
-  <div class="container">
-    <div class="form">
-      <div class="toolbar">
-        <button id="clear-history" title="Limpar histórico">🗑</button>
-        <button id="download-history" title="Baixar histórico">⬇️</button>
-        <button id="export-history" title="Exportar histórico">📤</button>
-      </div>
-      <textarea id="question" placeholder="Digite sua pergunta aqui..." rows="4"></textarea>
-      <button id="send">Enviar</button>
+  <div id="header"></div>
+  <div class="content">
+    <div class="icons">
+      <button id="clear-history" title="Limpar histórico">🗑</button>
+      <button id="download-history" title="Baixar histórico">⬇️</button>
+      <button id="export-history" title="Exportar histórico">📤</button>
     </div>
+
+    <textarea id="question" placeholder="Digite sua pergunta aqui..." rows="4"></textarea>
+    <button id="send">Enviar</button>
     <div id="response"></div>
     <ul id="history"></ul>
   </div>
@@ -126,23 +122,3 @@ exportBtn.addEventListener('click', () => {
 });
 
 renderHistory();
-
-
-// index.html (deve estar em novo-frontend/index.html)
-/*
-<!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vita Simples</title>
-    <link rel="manifest" href="/manifest.webmanifest" />
-    <meta name="theme-color" content="#007acc" />
-    <link rel="icon" href="/favicon.ico" />
-    <script type="module" src="/src/main.js"></script>
-  </head>
-  <body>
-    <div id="app"></div>
-  </body>
-</html>
-*/
