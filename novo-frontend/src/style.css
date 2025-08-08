@@ -1,107 +1,106 @@
-/* Reset e plano de fundo */
+/* style.css */
+
 body {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #cde1b8 url('/assets/bg-vita.png') no-repeat center center fixed;
-  background-size: cover;
-  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: url('/bg.png') repeat;
+  background-color: #d3e6bd;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  align-items: center;
 }
 
-/* Header fixo no topo */
 header {
-  background: url('/assets/header-vita.png') no-repeat center center;
-  background-size: cover;
-  height: 120px;
+  background: url('/header.png') no-repeat center center;
+  background-size: contain;
   width: 100%;
-  flex-shrink: 0;
+  height: 160px;
+  margin-bottom: 0;
 }
 
-/* Área principal com rolagem do histórico */
 main {
   flex: 1;
   display: flex;
   justify-content: center;
-  overflow: hidden;
-  padding: 1rem;
+  width: 100%;
 }
 
 #history {
-  display: flex;
-  flex-direction: column;
+  list-style-type: none;
+  padding: 20px;
+  max-width: 640px;
+  width: 90%;
+  height: calc(100vh - 320px);
   overflow-y: auto;
-  scroll-behavior: smooth;
-  width: 100%;
-  max-width: 800px;
-  padding: 1rem;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 12px;
-  box-shadow: 0 0 10px #0002;
-  height: 100%;
+  border-radius: 10px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-/* Cada item da conversa */
 #history li {
-  list-style: none;
-  margin-bottom: 1rem;
-  word-break: break-word;
+  margin-bottom: 20px;
 }
 
-#history strong:first-child {
-  color: black;
-}
-#history strong:nth-child(2) {
-  color: darkred;
+#history li strong:first-child {
+  display: block;
+  margin-bottom: 4px;
+  color: #000000;
 }
 
-/* Caixa de entrada fixa no final */
+#history li strong:nth-child(2) {
+  display: block;
+  color: #8B0000;
+}
+
 #input-area {
   position: fixed;
   bottom: 20px;
   width: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
   z-index: 999;
 }
 
 .controls {
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-textarea {
-  width: 90%;
-  max-width: 800px;
-  height: 50px;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 10px;
+textarea#question {
+  width: 400px;
+  height: 60px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
   resize: none;
-  border: none;
-  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  padding: 10px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  margin-bottom: 8px;
 }
 
-button {
-  background-color: #88a36c;
+button#send {
+  padding: 6px 20px;
+  background-color: #8aaf6c;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 6px;
   cursor: pointer;
-  font-weight: bold;
 }
 
-button:hover {
-  opacity: 0.9;
+button#send:hover {
+  background-color: #6e9354;
 }
 
-img.generated-image {
+.generated-image {
   max-width: 100%;
+  height: auto;
   margin-top: 10px;
   border-radius: 4px;
 }
