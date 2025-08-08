@@ -2,23 +2,18 @@ import './style.css';
 
 const root = document.querySelector('#app');
 root.innerHTML = `
-  <div class="header">
-    <img src="/assets/header-vita.png" alt="Header Vita Simples" />
+  <div id="header"></div>
+  <div class="toolbar">
+    <button id="clear-history" title="Limpar histórico">🗑️</button>
+    <button id="download-history" title="Baixar histórico">⬇️</button>
+    <button id="export-history" title="Exportar histórico">📤</button>
   </div>
-
-  <h1>Vita Simples (Demo)</h1>
-  <div id="api-status">API status: ok</div>
+  <ul id="history"></ul>
   <div class="form">
-    <textarea id="question" placeholder="Digite sua pergunta aqui..." rows="4"></textarea>
+    <textarea id="question" placeholder="Digite sua pergunta aqui..." rows="3"></textarea>
     <button id="send">Enviar</button>
-    <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-      <button id="clear-history">🗑 Limpar histórico</button>
-      <button id="download-history">⬇️ Baixar histórico</button>
-      <button id="export-history">📤 Exportar histórico</button>
-    </div>
   </div>
   <div id="response"></div>
-  <ul id="history"></ul>
 `;
 
 const btn = document.getElementById('send');

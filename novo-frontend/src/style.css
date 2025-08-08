@@ -1,60 +1,77 @@
-/* Fonte e layout base */
 body {
   font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
   margin: 0;
-  background: #f9f9f9;
+  background: url('/assets/background-vita.png') no-repeat center center fixed;
+  background-size: cover;
   color: #333;
-  padding: 0 2rem 2rem 2rem;
 }
 
-/* Header full width fixo */
-.header {
-  width: 100vw;
-  position: relative;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-}
-
-.header img {
+header {
   width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  border-radius: 0;
+  background: url('/assets/header-vita.png') no-repeat center center;
+  background-size: cover;
+  height: 120px;
+  margin-bottom: 1rem;
 }
 
-h1 {
-  color: #007acc;
-  margin: 1rem 0;
+main {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+  min-height: calc(100vh - 120px);
+  box-sizing: border-box;
 }
 
 .form {
+  width: 100%;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  position: relative;
+  margin-top: auto;
 }
 
 textarea {
   resize: vertical;
   width: 100%;
-  max-width: 700px;
-  padding: 0.5rem;
+  padding: 0.75rem;
   font-family: inherit;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  min-height: 4rem;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #007acc;
+  box-shadow: 0 0 4px rgba(0, 122, 204, 0.3);
 }
 
 button {
   padding: 0.5rem;
   font-size: 1rem;
-  max-width: 250px;
+  max-width: 100%;
   cursor: pointer;
   font-family: inherit;
+  border-radius: 12px;
+  border: none;
+  background-color: #007acc;
+  color: white;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background-color: #005fa3;
 }
 
 #response {
-  margin-bottom: 1rem;
+  margin-top: 1rem;
   font-weight: bold;
   max-width: 700px;
   word-wrap: break-word;
@@ -65,13 +82,14 @@ button {
   max-height: 50vh;
   overflow-y: auto;
   border: 1px solid #ccc;
-  padding: 0.5rem;
+  padding: 1rem;
   background: white;
   max-width: 700px;
-  margin-bottom: 2rem;
   list-style: none;
-  border-radius: 6px;
+  border-radius: 12px;
   font-family: inherit;
+  width: 100%;
+  margin-bottom: 2rem;
 }
 
 #history li {
@@ -85,4 +103,25 @@ img.generated-image {
   height: auto;
   margin-top: 0.5rem;
   border-radius: 4px;
+}
+
+#tools {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+#tools button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #007acc;
+  transition: transform 0.2s;
+}
+
+#tools button:hover {
+  transform: scale(1.1);
 }
