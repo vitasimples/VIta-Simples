@@ -2,18 +2,18 @@ import './style.css';
 
 const root = document.querySelector('#app');
 root.innerHTML = `
-  <div id="header"></div>
-  <div class="content">
-    <div class="icons">
-      <button id="clear-history" title="Limpar histórico">🗑</button>
-      <button id="download-history" title="Baixar histórico">⬇️</button>
-      <button id="export-history" title="Exportar histórico">📤</button>
-    </div>
-
-    <textarea id="question" placeholder="Digite sua pergunta aqui..." rows="4"></textarea>
-    <button id="send">Enviar</button>
-    <div id="response"></div>
+  <header></header>
+  <main>
     <ul id="history"></ul>
+  </main>
+  <div id="input-area">
+    <div class="controls">
+      <button id="clear-history">🗑</button>
+      <button id="download-history">⬇️</button>
+      <button id="export-history">📤</button>
+    </div>
+    <textarea id="question" placeholder="Digite sua pergunta aqui..."></textarea>
+    <button id="send">Enviar</button>
   </div>
 `;
 
@@ -68,30 +68,24 @@ function formatAnswer(answer) {
 btn.addEventListener('click', async () => {
   const question = document.getElementById('question').value.trim();
   if (!question) {
-    out.textContent = 'Por favor, digite uma pergunta.';
+    alert('Por favor, digite uma pergunta.');
     return;
   }
 
-  out.textContent = 'Enviando pergunta…';
+  const res = await fetch('/api/ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question, userId: 1 })
+  });
 
-  try {
-    const res = await fetch('/api/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question, userId: 1 })
-    });
-
-    const data = await res.json();
-    if (data.answer) {
-      out.innerHTML = `Resposta: ${formatAnswer(data.answer)}`;
-      saveToHistory(question, data.answer);
-    } else {
-      out.textContent = 'Erro: resposta inesperada.';
-    }
-  } catch (err) {
-    console.error(err);
-    out.textContent = 'Erro ao enviar a pergunta.';
+  const data = await res.json();
+  if (data.answer) {
+    saveToHistory(question, data.answer);
+  } else {
+    alert('Erro: resposta inesperada.');
   }
+
+  document.getElementById('question').value = '';
 });
 
 clearBtn.addEventListener('click', () => {
